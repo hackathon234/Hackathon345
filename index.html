@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Amani — Mental Health & Community Care</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ============ LANDING VIEW ============ -->
+<div id="view-landing">
+  <header class="site">
+    <div class="site-bar">
+      <div class="logo"><span class="logo-mark"></span>Amani</div>
+      <nav class="main-nav">
+        <a href="#events">Events</a>
+        <a href="#gatherings">Gatherings</a>
+        <a href="#sessions">Therapy sessions</a>
+        <a href="#roles">Join as</a>
+      </nav>
+      <div class="bar-actions">
+        <button class="btn btn-ghost btn-sm" onclick="openAuth('signin')">Sign in</button>
+        <button class="btn btn-primary btn-sm" onclick="openAuth('signup')">Get started</button>
+      </div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="wrap hero-grid">
+      <div>
+        <h1>Care that meets you where your county begins.</h1>
+        <p class="lede">Amani connects you to licensed professionals, trained volunteers, mentors and community gatherings — searchable right down to your sub-county. Book a session, join a gathering, or just talk to someone tonight.</p>
+        <div class="hero-ctas">
+          <button class="btn btn-primary" onclick="openAuth('signup')">Create your profile</button>
+          <button class="btn btn-ghost" onclick="document.getElementById('events').scrollIntoView({behavior:'smooth'})">Browse what's on</button>
+        </div>
+      </div>
+      <div class="today-panel">
+        <div>
+          <div class="today-label">TODAY, GENTLY</div>
+          <div class="today-quote" id="quoteText">"You don't have to carry it all at once."</div>
+        </div>
+        <div class="today-chat-cta" onclick="toggleChat(true)">
+          <span>Talk to the Amani assistant, anytime</span>
+          <span>→</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="events">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Three upcoming events</h2>
+          <p>Sign in to see full details, locations and to reserve a spot.</p>
+        </div>
+        <button class="btn btn-ghost btn-sm" onclick="openAuth('signin')">Sign in to view all</button>
+      </div>
+      <div class="card-row" id="landingEvents"><p class="empty-note">Loading events…</p></div>
+    </div>
+  </section>
+
+  <section id="sessions" style="background:#EAE7F2;">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Available therapy sessions</h2>
+          <p>From licensed professionals and trained volunteers. Sign in to book.</p>
+        </div>
+      </div>
+      <div class="card-row" id="landingSessions"><p class="empty-note">Loading sessions…</p></div>
+    </div>
+  </section>
+
+  <section id="roles" class="roles-strip">
+    <div class="wrap">
+      <div class="section-head">
+        <div>
+          <h2>Join Amani as...</h2>
+          <p>Every role gets its own dashboard and tools.</p>
+        </div>
+      </div>
+      <div class="roles-grid">
+        <button class="role-chip" onclick="openAuth('signup','user')"><div class="r-name">Normal user</div><div class="r-desc">Book sessions, join events & gatherings</div></button>
+        <button class="role-chip" onclick="openAuth('signup','professional')"><div class="r-name">Professional</div><div class="r-desc">Host paid sessions, get paid out</div></button>
+        <button class="role-chip" onclick="openAuth('signup','volunteer')"><div class="r-name">Prof. volunteer</div><div class="r-desc">Host free sessions for the community</div></button>
+        <button class="role-chip" onclick="openAuth('signup','mentor')"><div class="r-name">Mentor</div><div class="r-desc">Guide users through uploaded sessions</div></button>
+        <button class="role-chip" onclick="openAuth('signup','organizer')"><div class="r-name">Organizer</div><div class="r-desc">Publish community gatherings</div></button>
+        <button class="role-chip" onclick="openAuth('signup','partner')"><div class="r-name">Partner</div><div class="r-desc">List sponsored events & programs</div></button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="wrap">
+      <div>© 2026 Amani. A safer place to ask for help.</div>
+      <div>Crisis support isn't a replacement for emergency services. If you're in danger, contact local emergency services.</div>
+    </div>
+  </footer>
+</div>
+
+<!-- ============ DASHBOARD VIEW ============ -->
+<div id="view-dashboard">
+  <header class="site">
+    <div class="site-bar">
+      <div class="logo"><span class="logo-mark"></span>Amani</div>
+      <div class="bar-actions">
+        <button class="btn btn-ghost btn-sm" onclick="signOut()">Sign out</button>
+      </div>
+    </div>
+  </header>
+
+  <div class="dash-header">
+    <div class="wrap">
+      <div class="dash-head-row">
+        <div class="dash-user">
+          <div class="avatar" id="dashAvatar">A</div>
+          <div>
+            <div style="font-weight:600;font-size:16px;" id="dashName">—</div>
+            <div style="font-size:13px;color:var(--muted);" id="dashRole">—</div>
+          </div>
+        </div>
+        <button class="btn btn-accent btn-sm" onclick="openProfileModal()">Edit profile</button>
+      </div>
+      <div class="dash-tabs" id="dashTabs"></div>
+    </div>
+  </div>
+
+  <div class="wrap" style="padding-top:32px;padding-bottom:60px;">
+    <div id="dashPanels"></div>
+  </div>
+</div>
+
+<!-- ============ AUTH MODAL ============ -->
+<div class="modal-backdrop" id="authModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('authModal')">✕</button>
+    <h3 id="authTitle">Welcome back</h3>
+    <p class="sub" id="authSub">Sign in to book sessions, join events and gatherings.</p>
+    <div id="signupRoleBlock" style="display:none;">
+      <label style="font-size:13px;font-weight:600;">I'm joining as</label>
+      <div class="role-picker" id="rolePicker"></div>
+    </div>
+    <div class="field" id="nameField">
+      <label>Full name</label>
+      <input type="text" id="authName" placeholder="e.g. Achieng Otieno">
+    </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="authEmail" placeholder="you@example.com">
+    </div>
+    <div class="field">
+      <label>Password</label>
+      <input type="password" id="authPass" placeholder="At least 8 characters">
+    </div>
+    <div class="form-error" id="authError" style="display:none;"></div>
+    <button class="btn btn-primary btn-block" onclick="submitAuth()" id="authSubmitBtn">Sign in</button>
+    <p style="text-align:center;font-size:13px;margin-top:16px;color:var(--muted);">
+      <span id="authSwitchPrompt">New to Amani?</span>
+      <a href="#" onclick="switchAuthMode(event)" style="color:var(--primary);font-weight:600;text-decoration:none;" id="authSwitchLink">Create an account</a>
+    </p>
+  </div>
+</div>
+
+<!-- ============ PROFILE MODAL ============ -->
+<div class="modal-backdrop" id="profileModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('profileModal')">✕</button>
+    <h3>Customize your profile</h3>
+    <p class="sub">This helps us match you to the right people and places.</p>
+    <div class="field"><label>Display name</label><input type="text" id="pName"></div>
+    <div class="field"><label>Bio / what brings you here</label><textarea id="pBio" rows="3" placeholder="A short note — only shared with matches you approve."></textarea></div>
+    <div class="field"><label>County</label>
+      <select id="pCounty"><option>Nairobi</option><option>Kiambu</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option></select>
+    </div>
+    <div class="field"><label>Sub-county</label>
+      <select id="pSub"><option>Westlands</option><option>Ruiru</option><option>Nyali</option><option>Kisumu Central</option><option>Naivasha</option></select>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="saveProfile()">Save profile</button>
+  </div>
+</div>
+
+<!-- ============ BOOKING / PAYMENT MODAL ============ -->
+<div class="modal-backdrop" id="bookingModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('bookingModal')">✕</button>
+    <h3 id="bookTitle">Confirm booking</h3>
+    <p class="sub" id="bookSub"></p>
+    <div id="paymentBlock" style="display:none;">
+      <div class="field"><label>M-Pesa / card number</label><input type="text" placeholder="e.g. 07XX XXX XXX"></div>
+      <div class="field"><label>Amount</label><input type="text" id="bookAmount" disabled></div>
+    </div>
+    <button class="btn btn-primary btn-block" onclick="confirmBooking()" id="bookConfirmBtn">Confirm</button>
+  </div>
+</div>
+
+<!-- ============ ADD EVENT/GATHERING MODAL ============ -->
+<div class="modal-backdrop" id="addEventModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('addEventModal')">✕</button>
+    <h3>Add a new listing</h3>
+    <p class="sub">This will appear on the public events & gatherings pages once published.</p>
+    <div class="field"><label>Type</label>
+      <select id="neType"><option value="event">Paid event</option><option value="gathering">Free gathering</option></select>
+    </div>
+    <div class="field"><label>Title</label><input type="text" id="neTitle" placeholder="e.g. Youth Peer Support Circle"></div>
+    <div class="field"><label>County</label>
+      <select id="neCounty"><option>Nairobi</option><option>Kiambu</option><option>Mombasa</option><option>Kisumu</option><option>Nakuru</option></select>
+    </div>
+    <div class="field"><label>Date</label><input type="date" id="neDate"></div>
+    <div class="field"><label>Price (KES, 0 = free)</label><input type="number" id="nePrice" value="0"></div>
+    <button class="btn btn-primary btn-block" onclick="publishListing()">Publish listing</button>
+  </div>
+</div>
+
+<!-- ============ UPLOAD SESSION MODAL ============ -->
+<div class="modal-backdrop" id="uploadSessionModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('uploadSessionModal')">✕</button>
+    <h3>Upload a session</h3>
+    <div class="field"><label>Session title</label><input type="text" id="usTitle" placeholder="e.g. Managing exam anxiety"></div>
+    <div class="field"><label>Duration (minutes)</label><input type="number" id="usDuration" value="45"></div>
+    <div class="field" id="usPriceField"><label>Price (KES, 0 = free)</label><input type="number" id="usPrice" value="0"></div>
+    <button class="btn btn-primary btn-block" onclick="publishSession()">Publish session</button>
+  </div>
+</div>
+
+<!-- ============ CHATBOT ============ -->
+<button class="chat-fab" onclick="toggleChat()" aria-label="Open Amani assistant">💬</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head">
+    <div><div class="ch-name">Amani Assistant</div><div class="ch-sub">Powered by Groq · available site-wide</div></div>
+    <button onclick="toggleChat(false)" style="background:none;border:none;color:#fff;font-size:18px;">✕</button>
+  </div>
+  <div class="chat-body" id="chatBody"></div>
+  <div class="chat-input-row">
+    <input type="text" id="chatInput" placeholder="Type a message..." onkeydown="if(event.key==='Enter')sendChat()">
+    <button onclick="sendChat()">Send</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
